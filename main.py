@@ -13,13 +13,13 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, value):
-        super().__init__(value)
-
-        if not self.is_valid_phone_number():
+        if self.is_valid_phone_number(value):
+            super().__init__(value)
+        else:
             raise ValueError
 
-    def is_valid_phone_number(self):
-        return self.value.isdigit() and len(self.value) == 10
+    def is_valid_phone_number(self, value):
+        return value.isdigit() and len(value) == 10
 
 
 class Record:
@@ -79,7 +79,7 @@ class AddressBook(UserDict):
 
 john_record = Record("John")
 john_record.add_phone("1234567890")
-john_record.add_phone("5555555555")
+john_record.add_phone("55555555555")
 
 try:
     john_record.edit_phone("5555575555", "77777777777")
